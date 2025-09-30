@@ -1,16 +1,32 @@
 <template>
-  <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">
-      Welcome to Nuxt UI
+  <UContainer class="page-container">
+    <h1 class="title">
+      Nuxt Chat
     </h1>
-    <p class="mb-2">
-      This is the home page of your Nuxt UI application.
-    </p>
-    <nuxt-link
-      to="/about"
-      class="text-blue-500 hover:underline"
+    <UButton
+      to="/chat"
+      class="button"
     >
-      Go to About Page
-    </nuxt-link>
-  </div>
+      Start Chat
+    </UButton>
+  </UContainer>
 </template>
+
+<style scoped>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: bold;
+}
+
+.button {
+  margin-top: 1rem;
+}
+</style>

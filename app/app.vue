@@ -1,9 +1,8 @@
 <template>
   <UApp>
-    <UButton to="/">
-      Click me!
-    </UButton>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </UApp>
 </template>
 

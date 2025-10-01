@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import ChatWindow from '~/components/ChatWindow.vue'
+</script>
+
 <template>
   <div class="layout-container">
-    <h1>This is a chat</h1>
+    <ChatWindow />
   </div>
 </template>
 

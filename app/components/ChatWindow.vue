@@ -1,24 +1,40 @@
 <script setup lang="ts">
-import useChat from '~/composables/useChat'
+import useChatScroll from '~/composables/useChatScroll'
+import { watch } from 'vue'
+import ChatInput from './ChatInput.vue'
 
-const { chat, messages, sendMessage } = useChat()
+import type { ChatMessage, Chat } from '../types'
+
+const props = defineProps<{
+  messages: ChatMessage[]
+  chat: Chat
+}>()
+
+const emit = defineEmits(['send-message'])
+
+const { showScrollButton, scrollToBottom, pinToBottom }
+  = useChatScroll()
 
 function handleSendMessage(message: string) {
-  sendMessage(message)
+  emit('send-message', message)
 }
+
+watch(() => props.messages, pinToBottom, { deep: true })
 </script>
 
 <template>
-  <!-- eslint-disable-next-line vue/max-attributes-per-line -->
-  <div ref="scrollContainer" class="scroll-container">
+  <div
+    ref="scrollContainer"
+    class="scroll-container"
+  >
     <UContainer class="chat-container">
       <div
-        v-if="!messages.length"
+        v-if="!messages?.length"
         class="empty-state"
       >
         <div class="empty-state-card">
           <h2 class="empty-state-title">
-            Start your chat below
+            Start your chat
           </h2>
           <ChatInput @send-message="handleSendMessage" />
         </div>
@@ -26,9 +42,11 @@ function handleSendMessage(message: string) {
 
       <template v-else>
         <div class="chat-header">
-          {{ chat?.title || 'New Chat' }}
+          <h1 class="title">
+            {{ chat?.title || 'Untitled Chat' }}
+          </h1>
         </div>
-        <div class="message-container">
+        <div class="messages-container">
           <div
             v-for="message in messages"
             :key="message.id"
@@ -44,10 +62,18 @@ function handleSendMessage(message: string) {
           </div>
         </div>
 
-        <div class="chat-container">
-          <div class="message-form-container">
-            <ChatInput @send-message="handleSendMessage" />
+        <div class="message-form-container">
+          <div class="scroll-to-bottom-button-container">
+            <UButton
+              v-if="showScrollButton"
+              color="neutral"
+              variant="outline"
+              icon="i-heroicons-arrow-down"
+              class="rounded-full shadow-sm"
+              @click="() => scrollToBottom()"
+            />
           </div>
+          <ChatInput @send-message="handleSendMessage" />
         </div>
       </template>
     </UContainer>

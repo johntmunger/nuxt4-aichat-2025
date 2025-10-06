@@ -3,6 +3,10 @@ import ChatWindow from '~/components/ChatWindow.vue'
 import useChat from '~/composables/useChat'
 
 const { chat, messages, sendMessage } = useChat()
+
+useHead({
+  title: chat.value.title
+})
 </script>
 
 <template>

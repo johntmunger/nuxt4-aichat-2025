@@ -2,6 +2,14 @@
 import ChatWindow from '~/components/ChatWindow.vue'
 import useChat from '~/composables/useChat'
 
+const typing = ref(false)
+
+const handleSendMessage = async (message: string) => {
+  typing.value = true
+  await sendMessage(message)
+  typing.value = false
+}
+
 const { chat, messages, sendMessage } = useChat()
 
 const appConfig = useAppConfig()
@@ -19,9 +27,10 @@ useHead({
 <template>
   <div class="layout-container">
     <ChatWindow
+      :typing
       :chat
       :messages
-      @send-message="sendMessage"
+      @send-message="handleSendMessage"
     />
   </div>
 </template>

@@ -1,8 +1,8 @@
 export default defineAppConfig({
+  title: 'Nuxt Chat',
   ui: {
     colors: {
-      primary: 'green',
-      neutral: 'slate'
+      primary: 'blue'
     }
   }
 })
